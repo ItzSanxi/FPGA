@@ -1,0 +1,92 @@
+module tx (
+    input  wire clk             ,
+    input  wire rst_n           ,
+    input  wire start_tx        ,
+    input  wire [7:0] data_tx   ,
+    output wire tx              ,
+    output wire  done_tx
+);
+dd
+parameter sys_clk = 50_000_000, // 50 MHz
+          bps = 9600,
+          delay = sys_clk / bps;
+
+
+
+reg [7:0]   data_reg;
+reg         tx_en;
+reg [15:0]  cnt_bps;
+reg [3:0]   cnt_bit;
+reg         tx_reg;
+
+always @(posedge clk) 
+if (!rst_n) 
+    tx_en <= 0;
+else if (start_tx == 1) 
+    tx_en <= 1;
+else if (cnt_bit == 9 && cnt_bps == delay/2 - 1) 
+    tx_en <= 0;
+else 
+    tx_en <= tx_en;
+
+
+always @(posedge clk) 
+if (!rst_n) 
+    cnt_bps <= 0;
+else if (tx_en == 1) begin
+    if (cnt_bps == delay - 1) 
+        cnt_bps <= 0;
+    else 
+        cnt_bps <= cnt_bps + 1;
+end
+else 
+    cnt_bps <= 0;
+
+
+
+always @(posedge clk) 
+if (!rst_n) 
+    cnt_bit <= 0;
+else if (tx_en == 1) begin
+    if (cnt_bps == delay - 1) 
+        cnt_bit <= cnt_bit + 1;
+    else 
+        cnt_bit <= cnt_bit;
+end
+else 
+    cnt_bit <= 0;
+
+always @(posedge clk) 
+if (!rst_n) 
+    data_reg <= 0;
+else if (start_tx == 1) 
+    data_reg <= data_tx;
+else 
+    data_reg <= data_reg;
+
+
+always @(posedge clk) 
+if (!rst_n)
+    tx_reg <= 1;
+else if (tx_en == 1) begin
+    if (cnt_bps == delay - 1) begin
+        if (cnt_bit == 0)
+            tx_reg <= 0;
+        else if (cnt_bit >= 1 && cnt_bit <= 8)
+            tx_reg <= data_reg[cnt_bit - 1];
+        else if (cnt_bit == 9) begin
+            tx_reg <= 1;
+        end
+        else 
+            tx_reg <= tx_reg;
+    end
+    else 
+        tx_reg <= tx_reg;
+end
+else 
+    tx_reg <= 1;
+
+assign tx = tx_reg;
+assign done_tx = (cnt_bit == 9 && cnt_bps == delay - 1) ? 1 : 0;
+
+endmodule

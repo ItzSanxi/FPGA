@@ -1,0 +1,4 @@
+Info (10281): Verilog HDL Declaration information at ctrl.v(7): object "hsync" differs only in case from object "HSYNC" in the same scope File: E:/FPGA/vga/rtl/ctrl.v Line: 7
+Info (10281): Verilog HDL Declaration information at ctrl.v(8): object "vsync" differs only in case from object "VSYNC" in the same scope File: E:/FPGA/vga/rtl/ctrl.v Line: 8
+Info (10281): Verilog HDL Declaration information at top.v(5): object "HSYNC" differs only in case from object "hsync" in the same scope File: E:/FPGA/vga/rtl/top.v Line: 5
+Info (10281): Verilog HDL Declaration information at top.v(6): object "VSYNC" differs only in case from object "vsync" in the same scope File: E:/FPGA/vga/rtl/top.v Line: 6

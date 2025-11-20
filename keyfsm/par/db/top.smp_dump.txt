@@ -1,0 +1,7 @@
+
+State Machine - |top|key:key_u|cur_state
+Name cur_state.STOP cur_state.FLAG cur_state.DELAY cur_state.IDLE 
+cur_state.IDLE 0 0 0 0 
+cur_state.DELAY 0 0 1 1 
+cur_state.FLAG 0 1 0 1 
+cur_state.STOP 1 0 0 1 

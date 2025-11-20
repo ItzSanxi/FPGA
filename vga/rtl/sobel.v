@@ -1,0 +1,124 @@
+module sobel (
+    input wire           pclk       ,
+    input wire           rst_n      ,
+    input wire  [7:0]   line11_data ,
+    input wire  [7:0]   line12_data ,
+    input wire  [7:0]   line13_data ,
+    input wire  [7:0]   line21_data ,
+    input wire  [7:0]   line22_data ,
+    input wire  [7:0]   line23_data ,
+    input wire  [7:0]   line31_data ,
+    input wire  [7:0]   line32_data ,
+    input wire  [7:0]   line33_data ,
+    input wire         de_flag_line ,
+    input wire          hsync_line  ,
+    input wire          vsync_line  ,
+    output wire [15:0]  data_sobel ,
+    output wire         de_flag_sobel ,
+    output wire         hsync_sobel ,
+    output wire         vsync_sobel
+);
+
+reg [8:0]GX11, GX12, GX13, GX21, GX22, GX23, GX31, GX32, GX33;
+reg [8:0]GY11, GY12, GY13, GY21, GY22, GY23, GY31, GY32, GY33;
+
+
+always @(posedge pclk)
+if (!rst_n) begin
+    GX11 <= 0; GX12 <= 0; GX13 <= 0;
+    GX21 <= 0; GX22 <= 0; GX23 <= 0;
+    GX31 <= 0; GX32 <= 0; GX33 <= 0;
+end
+else
+begin
+    GX11 <= line11_data*1; GX12 <= line12_data*2; GX13 <= line13_data*1;
+    GX21 <= line21_data*0; GX22 <= line22_data*0; GX23 <= line23_data*0;
+    GX31 <= line31_data*1; GX32 <= line32_data*2; GX33 <= line33_data*1;
+end
+
+always @(posedge pclk)
+if (!rst_n) begin
+    GY11 <= 0; GY12 <= 0; GY13 <= 0;
+    GY21 <= 0; GY22 <= 0; GY23 <= 0;
+    GY31 <= 0; GY32 <= 0; GY33 <= 0;
+end
+else
+begin
+    GY11 <= line11_data*1; GY21 <= line21_data*2; GY31 <= line31_data*1;
+    GY12 <= line12_data*0; GY22 <= line22_data*0; GY32 <= line32_data*0;
+    GY13 <= line13_data*1; GY23 <= line23_data*2; GY33 <= line33_data*1;
+end
+
+reg [10:0] GX1,GX2,GX3,GY1,GY2,GY3;
+
+always @(posedge pclk)
+if (!rst_n) begin
+    GX1 <= 0; GX2 <= 0; GX3 <= 0;
+    GY1 <= 0; GY2 <= 0; GY3 <= 0;
+end
+else
+begin
+    GX1 <= GX11 + GX12 + GX13;
+    GX2 <= GX21 + GX22 + GX23;
+    GX3 <= GX31 + GX32 + GX33;
+    GY1 <= GY11 + GY21 + GY31;
+    GY2 <= GY12 + GY22 + GY32;
+    GY3 <= GY13 + GY23 + GY33;
+end
+
+reg [10:0] GX, GY;
+    always @(posedge pclk)
+    if (!rst_n) begin
+        GX <= 0;
+        GY <= 0;
+    end
+    else begin
+        if(GX1 > GX3)
+        GX<=GX1-GX3;
+        else 
+        GX<=GX3-GX1;
+        if(GY1>GY3)
+        GY<=GY1-GY3;
+        else
+        GY<=GY3-GY1;
+    end
+
+reg [11:0] ALL;
+
+always @(posedge pclk)
+if (!rst_n)
+    ALL <= 0;
+else
+    ALL <= GX + GY;
+
+reg [15:0] data_reg;
+
+always @(posedge pclk)
+if (!rst_n)
+    data_reg <= 0;
+else if (ALL > 100)
+    data_reg <= 16'hffff;
+else 
+    data_reg <= 0;
+
+reg [4:0] de_flag_line_r;
+reg [4:0] hsync_line_r;
+reg [4:0] vsync_line_r;
+
+always @(posedge pclk)
+if (!rst_n) begin  
+    de_flag_line_r <= 0;
+    hsync_line_r <= 0;
+    vsync_line_r <= 0;
+end
+else begin
+    de_flag_line_r <= {de_flag_line_r[3:0],de_flag_line};
+    hsync_line_r <= {hsync_line_r[3:0],hsync_line};
+    vsync_line_r <= {vsync_line_r[3:0],vsync_line};
+end
+
+assign data_sobel = data_reg;
+assign de_flag_sobel = de_flag_line_r[4];
+assign hsync_sobel = hsync_line_r[4];
+assign vsync_sobel = vsync_line_r[4];
+endmodule

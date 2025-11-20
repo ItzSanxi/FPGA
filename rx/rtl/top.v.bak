@@ -1,0 +1,33 @@
+module top  (
+input  wire clk,
+    input  wire rst_n,
+    input  wire rx
+    output reg [3:0] led
+
+);
+
+wire [7:0] data_rx;
+wire done_rx;
+
+always @(posedge clk) 
+    if (!rst_n)
+        led <= 0;
+ else if (done_rx == 1) begin
+        case (data_rx)
+            8'h01: led <= 4'b0001;
+            8'h02: led <= 4'b0010;
+            8'h03: led <= 4'b0100;
+            8'h04: led <= 4'b1000;
+            default: led <= 0;
+        endcase
+    end
+
+rx rx_u(
+.clk             (clk),
+    .rst_n           (rst_n),
+    .rx              (rx),
+    .data_rx         (data_rx),
+    .done_rx         (done_rx)
+);
+
+endmodule

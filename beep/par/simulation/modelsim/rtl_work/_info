@@ -1,0 +1,76 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dE:/FPGA/beep/par/simulation/modelsim
+vbeep
+Z1 !s110 1758676942
+!i10b 1
+!s100 ?Wkj1fD2Y<oM<7H4WWgQO0
+I4D9LO8zM899nNhZSIiDjE3
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1758613697
+8E:/FPGA/beep/rtl/beep.v
+FE:/FPGA/beep/rtl/beep.v
+L0 1
+Z3 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z4 !s108 1758676942.000000
+!s107 E:/FPGA/beep/rtl/beep.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+E:/FPGA/beep/rtl|E:/FPGA/beep/rtl/beep.v|
+!i113 1
+Z5 o-vlog01compat -work work
+Z6 !s92 -vlog01compat -work work +incdir+E:/FPGA/beep/rtl
+Z7 tCvgOpt 0
+vtb
+R1
+!i10b 1
+!s100 iLJ4ii_OlQKO8QQVCFi7G1
+IB9JP>ZC]9JhRP[1m>hnJQ2
+R2
+R0
+w1758612302
+8E:/FPGA/beep/par/../sim/tb.v
+FE:/FPGA/beep/par/../sim/tb.v
+L0 2
+R3
+r1
+!s85 0
+31
+R4
+!s107 E:/FPGA/beep/par/../sim/tb.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+E:/FPGA/beep/par/../sim|E:/FPGA/beep/par/../sim/tb.v|
+!i113 1
+R5
+!s92 -vlog01compat -work work +incdir+E:/FPGA/beep/par/../sim
+R7
+vtop
+R1
+!i10b 1
+!s100 ^^H63VfAiC3`g>UQW82EJ2
+Ii22G?bW[9;Fk6[nK13ZAf2
+R2
+R0
+w1758612034
+8E:/FPGA/beep/rtl/top.v
+FE:/FPGA/beep/rtl/top.v
+L0 1
+R3
+r1
+!s85 0
+31
+R4
+!s107 E:/FPGA/beep/rtl/top.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+E:/FPGA/beep/rtl|E:/FPGA/beep/rtl/top.v|
+!i113 1
+R5
+R6
+R7

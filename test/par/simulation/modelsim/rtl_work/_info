@@ -1,0 +1,54 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dE:/FPGA/test/par/simulation/modelsim
+vtb
+!s110 1758591003
+!i10b 1
+!s100 N0k5VmCjYn^W7Q9GKPBYz2
+IF6YK0BMo3fUjmPNl4LSL;3
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1758590991
+8E:/FPGA/test/par/../../ledliushui/sim/tb.v
+FE:/FPGA/test/par/../../ledliushui/sim/tb.v
+L0 2
+Z2 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z3 !s108 1758591002.000000
+!s107 E:/FPGA/test/par/../../ledliushui/sim/tb.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+E:/FPGA/test/par/../../ledliushui/sim|E:/FPGA/test/par/../../ledliushui/sim/tb.v|
+!i113 1
+Z4 o-vlog01compat -work work
+!s92 -vlog01compat -work work +incdir+E:/FPGA/test/par/../../ledliushui/sim
+Z5 tCvgOpt 0
+vtop
+!s110 1758591002
+!i10b 1
+!s100 adPiAWIcgV[fzO8SP;^l43
+IZNkifQSCgBR9W?OW[QZ>K0
+R1
+R0
+w1758590733
+8E:/FPGA/led/rtl/led.v
+FE:/FPGA/led/rtl/led.v
+L0 1
+R2
+r1
+!s85 0
+31
+R3
+!s107 E:/FPGA/led/rtl/led.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+E:/FPGA/led/rtl|E:/FPGA/led/rtl/led.v|
+!i113 1
+R4
+!s92 -vlog01compat -work work +incdir+E:/FPGA/led/rtl
+R5

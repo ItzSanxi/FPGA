@@ -1,0 +1,28 @@
+module key (
+    input  wire clk,
+    input  wire rst_n,
+    input  wire key,
+    output reg  keyout
+);
+parameter delay = 10;//_000_000; //
+reg [19:0] cnt;
+always @(posedge clk) 
+  if (!rst_n) 
+        cnt <= 0;
+  else if (key==0)
+        if (cnt == delay - 1)
+            cnt <= cnt;
+            
+        else
+            cnt <= cnt + 1;
+  else
+        cnt <= 0;
+
+always @(posedge clk) 
+  if (!rst_n)
+        keyout <= 0;
+  else if (cnt == delay - 2)
+        keyout <= 1;
+  else
+        keyout <= 0;
+endmodule

@@ -1,0 +1,17 @@
+module beep (
+    input  wire clk,
+    input  wire rst_n,
+    output wire pwm
+);
+
+parameter delay = 4;
+reg [15:0] cnt;
+always @(posedge clk) 
+  if (!rst_n) 
+        cnt <= 0;
+  else if (cnt == delay - 1)
+        cnt <= 0;
+  else
+        cnt <= cnt + 1;
+assign pwm = (cnt < delay/2 - 1) ? 1 : 0;
+endmodule

@@ -1,0 +1,64 @@
+module vga (   
+    input  wire pclk      ,
+    input  wire rst_n     ,
+    output wire hsync     ,
+    output wire vsync     ,
+    output wire de        ,
+    output wire [9:0] X   ,
+    output wire [9:0] Y    
+);
+
+
+parameter H_TOTAL   = 800,
+          H_ADDR    = 640,
+          H_RIGHT   = 8,
+          H_LEFT    = 8,
+          H_FRONT   = 8,
+          H_BACK    = 40,
+          H_SYNC    = 96;
+
+
+parameter V_TOTAL   = 525,
+          V_ADDR    = 480,
+          V_BOTTOM  = 8,
+          V_TOP     = 8,
+          V_FRONT   = 2,
+          V_BACK    = 25,
+          V_SYNC    = 2;
+
+// wire de;
+reg [9:0] cnt_h;
+reg [9:0] cnt_v;
+
+always @(posedge pclk)
+if (!rst_n)
+    cnt_h <= 0;
+else if (cnt_h == H_TOTAL - 1)
+    cnt_h <= 0;
+else 
+    cnt_h <= cnt_h + 1;
+
+always @(posedge pclk)
+if (!rst_n)
+    cnt_v <= 0;
+else if (cnt_h == H_TOTAL - 1) begin
+    if (cnt_v == V_TOTAL - 1)
+        cnt_v <= 0;
+    else 
+        cnt_v <= cnt_v + 1;
+end
+else 
+    cnt_v <= cnt_v;
+
+assign hsync = (cnt_h < H_SYNC) ? 1 :  0;
+assign vsync = (cnt_v < V_SYNC) ? 1 :  0;
+assign de =     (cnt_h > (H_LEFT + H_SYNC + H_BACK - 1) 
+            &&   cnt_h <=(H_LEFT + H_SYNC + H_BACK + H_ADDR - 1)
+            &&   cnt_v > (V_TOP + V_SYNC + V_BACK - 1) 
+            &&  cnt_v <= (V_TOP + V_SYNC + V_BACK + V_ADDR - 1)
+            ) ? 1 : 0;
+
+assign X = (de == 1) ? (cnt_h - (H_LEFT + H_SYNC + H_BACK)) : 0;
+assign Y = (de == 1) ? (cnt_v - (V_TOP  + V_SYNC + V_BACK)) : 0;
+
+endmodule

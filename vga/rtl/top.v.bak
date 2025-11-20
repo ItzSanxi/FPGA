@@ -1,0 +1,26 @@
+module top (
+    input  wire clk       ,
+    input  wire rst_n     ,
+    output wire hsync     ,
+    output wire vsync     ,
+    output wire [15:0] data_rgb
+);
+
+
+wire pclk;
+wire locked;
+pll	pll_inst (
+	.areset ( !rst_n ),
+	.inclk0 ( clk ),
+	.c0 ( pclk ),
+	.locked ( locked)
+	);
+vga vga_u (   
+    .pclk       (pclk       ),
+    .rst_n     (rst_n & locked     ),
+    .hsync     (hsync     ),
+    .vsync     (vsync     ),
+    .data_rgb  (data_rgb  )
+);
+
+endmodule
